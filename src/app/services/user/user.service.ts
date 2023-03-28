@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserRequest } from '../../interfaces/User/UserRequest';
-import { AuthRequest } from '../../interfaces/User/AuthRequest';
+import { AuthRequest } from '../../interfaces/User/auth/AuthRequest';
+import { AuthResponse } from 'src/app/interfaces/User/auth/AuthResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class UserService {
     )
   }
 
-  authUser(requestDatas: AuthRequest): Observable<AuthRequest> {
-    return this.http.post<AuthRequest>(
+  authUser(requestDatas: AuthRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(
       `${this.API_URL}/session`,
       requestDatas
     )

@@ -3,7 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../services/user/user.service';
 import { UserRequest } from '../../interfaces/User/UserRequest';
-import { AuthRequest } from '../../interfaces/User/AuthRequest';
+import { AuthRequest } from '../../interfaces/User/auth/AuthRequest';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,8 @@ export class HomeComponent {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cookieService: CookieService
   ) { }
 
   onSubmitLoginForm() {
@@ -34,6 +36,9 @@ export class HomeComponent {
         .subscribe({
           next: (response) => {
             console.log('AUTENTICADO', response)
+            // Seta Cookie com token JWT
+            this.cookieService.set('USER_INFO', response.token);
+
             this.messageService.add({
               severity: 'success', summary: 'Sucesso', detail: 'Bem vindo de volta!', life: 2000
             });
