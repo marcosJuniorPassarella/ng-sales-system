@@ -1,0 +1,101 @@
+<div class="grid">
+  <div class="col-12">
+    <div
+      class="flex justify-content-center align-content-center text-align-center mg-auto"
+    >
+      <!-- LOGIN -->
+      <p-card
+        styleClass="mt-10"
+        header="Login"
+        subheader="Faça login com sua conta existente!"
+        *ngIf="loginForm"
+      >
+        <div
+          class="flex justify-content-center align-content-center text-align-center"
+        >
+          <input
+            type="text"
+            pInputText
+            formControlName="text"
+            placeholder="Email"
+          />
+        </div>
+
+        <div
+          class="flex justify-content-center align-content-center text-align-center mt-3"
+        >
+          <input
+            type="text"
+            pInputText
+            formControlName="text"
+            placeholder="Senha"
+          />
+        </div>
+
+        <div class="card flex justify-content-center mt-3">
+          <button pButton pRipple label="Login"></button>
+        </div>
+
+        <span
+          class="flex justify-content-center align-content-center text-align-center mt-3 text-red-600 font-semibold"
+          style="cursor: pointer"
+          (click)="loginForm = !loginForm"
+          >Criar conta</span
+        >
+      </p-card>
+
+      <!-- SIGNUP -->
+      <p-card
+        styleClass="mt-10"
+        header="Criar conta"
+        subheader="Crie já sua conta gratuita!"
+        *ngIf="!loginForm"
+      >
+        <div
+          class="flex justify-content-center align-content-center text-align-center"
+        >
+          <input
+            type="text"
+            pInputText
+            formControlName="text"
+            placeholder="Nome"
+          />
+        </div>
+
+        <div
+          class="flex justify-content-center align-content-center text-align-center mt-3"
+        >
+          <input
+            type="text"
+            pInputText
+            formControlName="text"
+            placeholder="Email"
+          />
+        </div>
+
+        <div
+          class="flex justify-content-center align-content-center text-align-center mt-3"
+        >
+          <input
+            type="text"
+            pInputText
+            formControlName="text"
+            placeholder="Senha"
+          />
+        </div>
+
+        <div class="card flex justify-content-center mt-3">
+          <button pButton pRipple label="Criar conta"></button>
+        </div>
+
+        <span
+          class="flex justify-content-center align-content-center text-align-center mt-3 text-red-600 font-semibold"
+          style="cursor: pointer"
+          (click)="loginForm = !loginForm"
+        >
+          Fazer Login
+        </span>
+      </p-card>
+    </div>
+  </div>
+</div>
