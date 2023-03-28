@@ -8,9 +8,23 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class HomeComponent {
   loginCard = true;
-
-
+  loginForm = this.formBuilder.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  });
+  signUpForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  });
 
   constructor(private formBuilder: FormBuilder) { }
 
+  onSubmitLoginForm() {
+    console.warn(this.loginForm.value);
+  }
+
+  onSubmitSignupForm(): void {
+    console.warn(this.signUpForm.value)
+  }
 }

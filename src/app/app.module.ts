@@ -19,11 +19,12 @@ import { HomeComponent } from './modules/home/home.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     // PrimeNg
     CardModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
