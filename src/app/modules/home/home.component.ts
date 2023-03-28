@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../services/user/user.service';
 import { UserRequest } from '../../interfaces/User/UserRequest';
+import { AuthRequest } from '../../interfaces/User/AuthRequest';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,24 @@ export class HomeComponent {
   ) { }
 
   onSubmitLoginForm() {
-    console.warn(this.loginForm.value);
+    if (this.loginForm.value && this.loginForm.valid) {
+      this.userService.authUser(this.loginForm.value as AuthRequest)
+        .subscribe({
+          next: (response) => {
+            console.log('AUTENTICADO', response)
+            this.messageService.add({
+              severity: 'success', summary: 'Sucesso', detail: 'Bem vindo de volta!', life: 2000
+            });
+            this.loginForm.reset();
+          },
+          error: (error) => {
+            console.log(error);
+            this.messageService.add({
+              severity: 'error', summary: 'Erro', detail: 'Erro ao fazer login!', life: 2000
+            })
+          }
+        })
+    }
   }
 
   onSubmitSignupForm(): void {
@@ -38,7 +56,7 @@ export class HomeComponent {
         .subscribe({
           next: (response) => {
             this.messageService.add({
-              severity: 'success', summary: 'Sucesso', detail: 'Usuário criado com sucesso!'
+              severity: 'success', summary: 'Sucesso', detail: 'Usuário criado com sucesso!', life: 2000
             })
             this.signUpForm.reset();
             this.loginCard = true;
@@ -46,7 +64,7 @@ export class HomeComponent {
           error: (error) => {
             console.log(error);
             this.messageService.add({
-              severity: 'error', summary: 'Erro', detail: 'Erro ao criar usuário!'
+              severity: 'error', summary: 'Erro', detail: 'Erro ao criar usuário!', life: 2000
             })
           }
         })
