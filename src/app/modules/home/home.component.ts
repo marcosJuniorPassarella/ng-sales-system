@@ -5,6 +5,7 @@ import { UserService } from '../../services/user/user.service';
 import { UserRequest } from '../../interfaces/User/UserRequest';
 import { AuthRequest } from '../../interfaces/User/auth/AuthRequest';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ export class HomeComponent {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private messageService: MessageService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private router: Router
   ) { }
 
   onSubmitLoginForm() {
@@ -43,6 +45,7 @@ export class HomeComponent {
               severity: 'success', summary: 'Sucesso', detail: 'Bem vindo de volta!', life: 2000
             });
             this.loginForm.reset();
+            this.router.navigate(['/dashboard'])
           },
           error: (error) => {
             console.log(error);
