@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SidebarModule } from 'primeng/sidebar';
+import { ChartModule } from 'primeng/chart';
 
 import { ROUTES } from './dashboard.routing';
 
@@ -19,7 +20,7 @@ import { ROUTES } from './dashboard.routing';
     RouterModule.forChild(ROUTES),
     // PrimeNG
     SidebarModule,
-
+    ChartModule
   ]
 })
 export class DashboardModule { }
