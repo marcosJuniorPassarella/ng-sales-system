@@ -31,7 +31,6 @@ export class UserService {
 
   isLoggedIn(): boolean {
     const JWT_TOKEN = this.cookie.get('USER_INFO')
-    console.log('token do usuário', JWT_TOKEN);
     return JWT_TOKEN ? true : false;
   }
 }
