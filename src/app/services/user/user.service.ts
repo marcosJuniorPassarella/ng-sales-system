@@ -5,13 +5,14 @@ import { UserRequest } from '../../interfaces/User/UserRequest';
 import { AuthRequest } from '../../interfaces/User/auth/AuthRequest';
 import { AuthResponse } from 'src/app/interfaces/User/auth/AuthResponse';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private API_URL = 'http://localhost:3333/v1'
+  private API_URL = environment.API_URL
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
