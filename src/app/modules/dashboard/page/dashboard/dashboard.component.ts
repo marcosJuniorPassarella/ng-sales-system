@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
+  logoutUser(): void {
+    alert('Logout Realizado')
+  }
 }
