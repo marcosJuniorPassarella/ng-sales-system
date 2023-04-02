@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserRequest } from '../../interfaces/User/UserRequest';
@@ -6,13 +6,20 @@ import { AuthRequest } from '../../interfaces/User/auth/AuthRequest';
 import { AuthResponse } from 'src/app/interfaces/User/auth/AuthResponse';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../environments/environment';
+import { UserInfo } from '../../interfaces/User/UserInfo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   private API_URL = environment.API_URL
+  private JWT_TOKEN = this.cookie.get('USER_INFO');
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.JWT_TOKEN}`
+    }),
+  };
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
@@ -33,5 +40,10 @@ export class UserService {
   isLoggedIn(): boolean {
     const JWT_TOKEN = this.cookie.get('USER_INFO')
     return JWT_TOKEN ? true : false;
+  }
+
+  getUserInfo(): Observable<UserInfo> {
+    return this.http.get<UserInfo>(
+      `${this.API_URL}/me`, this.httpOptions)
   }
 }
