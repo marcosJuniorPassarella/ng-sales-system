@@ -13,5 +13,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.primengConfig.setTranslation({
+      matchAll: 'Corresponder a todos',
+      matchAny: 'Corresponder a qualquer',
+      apply: 'Aplicar',
+      clear: 'Limpar',
+      cancel: 'Cancelar',
+      removeRule: 'Remover regra',
+      addRule: 'Adicionar regra',
+      startsWith: 'Começa com'
+    })
   }
 }
