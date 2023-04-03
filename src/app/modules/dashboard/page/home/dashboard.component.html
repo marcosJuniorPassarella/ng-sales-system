@@ -1,45 +1,4 @@
-<p-toolbar styleClass="bg-indigo-800">
-  <div class="p-toolbar-group-start">
-    <p-button
-      label="Dashboard"
-      icon="pi pi-home"
-      routerLink="/dashboard"
-      styleClass="bg-indigo-800 p-button-secondary"
-    ></p-button>
-  </div>
-
-  <div class="p-toolbar-group-center">
-    <p-button
-      label="Produtos"
-      icon="pi pi-cart-plus"
-      routerLink="/products"
-      styleClass="bg-indigo-800 p-button-secondary"
-      class="mr-2"
-    ></p-button>
-    <p-button
-      label="Categorias"
-      icon="pi pi-ticket"
-      routerLink="/categories"
-      styleClass="bg-indigo-800 p-button-secondary"
-      class="mr-2"
-    ></p-button>
-    <p-button
-      label="Vender"
-      icon="pi pi-credit-card"
-      styleClass="bg-indigo-800 p-button-secondary"
-      class="mr-2"
-    ></p-button>
-  </div>
-
-  <div class="p-toolbar-group-end">
-    <p-button
-      (onClick)="logoutUser()"
-      icon="pi pi-sign-out"
-      label="Sair"
-      styleClass="p-button-danger"
-    ></p-button>
-  </div>
-</p-toolbar>
+<app-toolbar-navigation></app-toolbar-navigation>
 
 <div class="grid">
   <div class="col-12">
@@ -47,7 +6,8 @@
       class="text-center text-4xl font-medium text-indigo-700 fadeinleft animation-duration-2000 mt-5"
       *ngIf="userName"
     >
-      Bem vindo de volta <span class="text-indigo-600">{{ userName }}</span>!
+      Bem vindo de volta <span class="text-indigo-600">{{ userName }}</span
+      >!
     </h3>
 
     <!-- GRÁFICO DE PRODUTOS EM ESTOQUE -->

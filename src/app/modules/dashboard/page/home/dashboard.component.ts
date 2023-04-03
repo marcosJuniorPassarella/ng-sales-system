@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { ChartData, ChartOptions } from 'chart.js';
 import { UserService } from '../../../../services/user/user.service';
@@ -12,7 +11,8 @@ import { AllProducts } from 'src/app/interfaces/Products/AllProducts';
   templateUrl: './dashboard.component.html',
   styleUrls: []
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  private readonly destroy$: Subject<void> = new Subject();
   userName!: string;
   productsList: Array<AllProducts> = [];
 
@@ -20,8 +20,6 @@ export class DashboardComponent implements OnInit {
   productsChartOptions!: ChartOptions;
 
   constructor(
-    private cookie: CookieService,
-    private router: Router,
     private userService: UserService,
     private messageService: MessageService,
     private productsService: ProductsService,
@@ -35,6 +33,7 @@ export class DashboardComponent implements OnInit {
   // Busca dados do usuário na API
   getUserDatas(): void {
     this.userService.getUserInfo()
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           response && (this.userName = response.name)
@@ -54,6 +53,7 @@ export class DashboardComponent implements OnInit {
   // Busca dados de produtos na API
   getProductsDatas(): void {
     this.productsService.getAllProducts()
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (response) {
@@ -131,10 +131,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Funcionalidade de logout de usuário
-  logoutUser(): void {
-    this.cookie.delete('USER_INFO');
-    void this.router.navigate(['/home']);
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 };
 
