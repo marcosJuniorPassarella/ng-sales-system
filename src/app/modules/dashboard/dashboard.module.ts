@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { CookieService } from 'ngx-cookie-service';
+
 import { SidebarModule } from 'primeng/sidebar';
 import { ChartModule } from 'primeng/chart';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
+import { CardModule } from 'primeng/card';
+import { MessageService } from 'primeng/api';
 
 import { DashboardComponent } from './page/dashboard/dashboard.component';
 import { ROUTES } from './dashboard.routing';
-import { CookieService } from 'ngx-cookie-service';
-import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { MessageService } from 'primeng/api';
     SidebarModule,
     ChartModule,
     ButtonModule,
-    ToolbarModule
+    ToolbarModule,
+    CardModule
   ],
   providers: [MessageService, CookieService],
 })
