@@ -5,6 +5,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { UserService } from '../../../../services/user/user.service';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { AllProducts } from 'src/app/interfaces/Products/AllProducts';
+import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private messageService: MessageService,
     private productsService: ProductsService,
+    private productsDtService: ProductsDataTransferService
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +60,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response) {
             this.productsList = response;
-            this.productsList && this.setProductsChartConfig();
+            if (this.productsList) {
+              this.productsList && this.setProductsChartConfig();
+              this.productsDtService.setProductsDatas(this.productsList);
+            }
 
           }
         },
