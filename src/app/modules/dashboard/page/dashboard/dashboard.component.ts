@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../../services/user/user.service';
+import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
+import { ChartData, ChartOptions } from 'chart.js';
+import { UserService } from '../../../../services/user/user.service';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { AllProducts } from 'src/app/interfaces/Products/AllProducts';
 
@@ -15,28 +16,24 @@ export class DashboardComponent implements OnInit {
   userName!: string;
   productsList: Array<AllProducts> = [];
 
-  productsChartDatas!: any;
-  productsChartOptions!: any;
-  categoriesChartDatas!: any;
-  categoriesChartOptions!: any;
-
+  productsChartDatas!: ChartData;
+  productsChartOptions!: ChartOptions;
 
   constructor(
     private cookie: CookieService,
     private router: Router,
     private userService: UserService,
     private messageService: MessageService,
-    private productsService: ProductsService
+    private productsService: ProductsService,
   ) { }
 
   ngOnInit(): void {
-    this.getUserName();
+    this.getUserDatas();
     this.getProductsDatas();
-    this.setCategoriesChartConfig();
   }
 
   // Busca dados do usuário na API
-  getUserName(): void {
+  getUserDatas(): void {
     this.userService.getUserInfo()
       .subscribe({
         next: (response) => {
@@ -77,12 +74,6 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  // Funcionalidade de logout de usuário
-  logoutUser(): void {
-    this.cookie.delete('USER_INFO');
-    void this.router.navigate(['/home']);
-  }
-
   // Configura gráfico de produtos em estoque
   setProductsChartConfig(): void {
     if (this.productsList.length > 0) {
@@ -91,14 +82,14 @@ export class DashboardComponent implements OnInit {
       const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
       const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-      console.log(this.productsList.map((element) => element.amount))
       this.productsChartDatas = {
         labels: this.productsList.map((element) => element.name),
         datasets: [
           {
             label: 'Quantidade',
-            backgroundColor: documentStyle.getPropertyValue('--indigo-600'),
-            borderColor: documentStyle.getPropertyValue('--indigo-600'),
+            backgroundColor: documentStyle.getPropertyValue('--yellow-400'),
+            borderColor: documentStyle.getPropertyValue('--yellow-500'),
+            hoverBackgroundColor: documentStyle.getPropertyValue('--yellow-500'),
             data: this.productsList.map((element) => element.amount)
           }
         ]
@@ -119,12 +110,11 @@ export class DashboardComponent implements OnInit {
             ticks: {
               color: textColorSecondary,
               font: {
-                weight: 500
+                weight: '500'
               }
             },
             grid: {
               color: surfaceBorder,
-              drawBorder: false
             }
           },
           y: {
@@ -133,7 +123,6 @@ export class DashboardComponent implements OnInit {
             },
             grid: {
               color: surfaceBorder,
-              drawBorder: false
             }
           }
 
@@ -142,66 +131,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Configura gráfico de categorias cadastradas
-  setCategoriesChartConfig(): void {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.categoriesChartDatas = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          data: [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-          label: 'My Second dataset',
-          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
-          borderColor: documentStyle.getPropertyValue('--pink-500'),
-          data: [28, 48, 40, 19, 86, 27, 90]
-        }
-      ]
-    };
-
-    this.categoriesChartOptions = {
-      indexAxis: 'y',
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
-            font: {
-              weight: 500
-            }
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        }
-      }
-    };
+  // Funcionalidade de logout de usuário
+  logoutUser(): void {
+    this.cookie.delete('USER_INFO');
+    void this.router.navigate(['/home']);
   }
 };
 
