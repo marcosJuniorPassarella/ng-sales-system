@@ -13,7 +13,8 @@ import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
 
 import { DashboardComponent } from './page/home/dashboard.component';
-import { ROUTES } from './dashboard.routing';
+import { DASHBOARD_ROUTES } from './dashboard.routing';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ROUTES } from './dashboard.routing';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(ROUTES),
+    RouterModule.forChild(DASHBOARD_ROUTES),
+    SharedModule,
     // PrimeNG
     SidebarModule,
     ChartModule,
