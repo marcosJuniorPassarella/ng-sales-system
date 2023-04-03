@@ -1,4 +1,4 @@
-<p-toolbar styleClass="bg-indigo-700">
+<p-toolbar styleClass="bg-indigo-800">
   <div class="p-toolbar-group-start">
     <p-button
       label="Dashboard"
@@ -44,10 +44,22 @@
 <div class="grid">
   <div class="col-12">
     <h3
-      class="text-center text-4xl font-medium text-indigo-800 fadeinleft animation-duration-1000 animation-delay-300 mt-5"
+      class="text-center text-4xl font-medium text-indigo-700 fadeinleft animation-duration-2000 mt-5"
       *ngIf="userName"
     >
       Bem vindo de volta {{ userName }}!
     </h3>
+
+    <!-- GRÁFICO DE PRODUTOS EM ESTOQUE -->
+    <p-card
+      header="Produtos em estoque"
+      styleClass="shadow-3 m-5 text-indigo-800"
+    >
+      <p-chart
+        type="bar"
+        [data]="productsChartDatas"
+        [options]="productsChartOptions"
+      ></p-chart>
+    </p-card>
   </div>
 </div>
