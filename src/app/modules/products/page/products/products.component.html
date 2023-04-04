@@ -2,6 +2,7 @@
 
 <div class="grid">
   <div class="col-12">
+
     <p-card
       styleClass="shadow-3 m-5 text-indigo-700"
       header="Produtos em estoque"
@@ -11,10 +12,7 @@
         [value]="productsDatas"
         [rows]="10"
         [paginator]="true"
-        [globalFilterFields]="[
-          'name',
-          'amount',
-        ]"
+        [globalFilterFields]="['name', 'amount']"
         [tableStyle]="{ 'min-width': '75rem' }"
         [(selection)]="productSelected"
         [rowHover]="true"
@@ -22,6 +20,28 @@
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} produtos"
         [showCurrentPageReport]="true"
       >
+        <ng-template pTemplate="caption">
+          <div class="flex gap-4">
+            <p-button
+              styleClass="p-button-success"
+              icon="pi pi-plus"
+              label="Adicionar"
+            ></p-button>
+
+            <p-button
+              styleClass="p-button-warning"
+              icon="pi pi-pencil"
+              label="Editar"
+            ></p-button>
+
+            <p-button
+              styleClass="p-button-danger"
+              icon="pi pi-trash"
+              label="Remover"
+            ></p-button>
+          </div>
+        </ng-template>
+
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="name" style="width: 50%">
