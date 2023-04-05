@@ -11,16 +11,15 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 
 import { ProductsComponent } from './page/products/products.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PRODUCTS_ROUTES } from './products.routing';
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 @NgModule({
-  declarations: [
-    ProductsComponent
-  ],
+  declarations: [ProductsComponent, AddProductComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,6 +35,8 @@ import { PRODUCTS_ROUTES } from './products.routing';
     InputTextModule,
     InputTextareaModule,
     InputNumberModule,
-  ]
+    DynamicDialogModule,
+  ],
+  providers: [DialogService],
 })
-export class ProductsModule { }
+export class ProductsModule {}
