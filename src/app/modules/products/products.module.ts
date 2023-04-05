@@ -16,10 +16,10 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ProductsComponent } from './page/products/products.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PRODUCTS_ROUTES } from './products.routing';
-import { AddProductComponent } from './components/add-product/add-product.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 @NgModule({
-  declarations: [ProductsComponent, AddProductComponent],
+  declarations: [ProductsComponent, ProductFormComponent],
   imports: [
     CommonModule,
     FormsModule,

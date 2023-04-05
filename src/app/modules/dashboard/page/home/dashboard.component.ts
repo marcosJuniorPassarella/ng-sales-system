@@ -4,8 +4,8 @@ import { MessageService } from 'primeng/api';
 import { ChartData, ChartOptions } from 'chart.js';
 import { UserService } from '../../../../services/user/user.service';
 import { ProductsService } from 'src/app/services/products/products.service';
-import { AllProducts } from 'src/app/interfaces/Products/AllProducts';
 import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
+import { AllProducts } from 'src/app/models/interfaces/Products/AllProducts';
 
 @Component({
   selector: 'app-dashboard',

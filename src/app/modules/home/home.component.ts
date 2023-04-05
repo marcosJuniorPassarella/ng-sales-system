@@ -2,26 +2,26 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../services/user/user.service';
-import { UserRequest } from '../../interfaces/User/UserRequest';
-import { AuthRequest } from '../../interfaces/User/auth/AuthRequest';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { AuthRequest } from 'src/app/models/interfaces/User/auth/AuthRequest';
+import { UserRequest } from 'src/app/models/interfaces/User/UserRequest';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   loginCard = true;
   loginForm = this.formBuilder.group({
     email: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
   signUpForm = this.formBuilder.group({
     name: ['', Validators.required],
     email: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
   constructor(
@@ -30,52 +30,64 @@ export class HomeComponent {
     private messageService: MessageService,
     private cookieService: CookieService,
     private router: Router
-  ) { }
+  ) {}
 
   onSubmitLoginForm() {
     if (this.loginForm.value && this.loginForm.valid) {
-      this.userService.authUser(this.loginForm.value as AuthRequest)
-        .subscribe({
-          next: (response) => {
-            console.log('AUTENTICADO', response)
-            // Seta Cookie com token JWT
-            this.cookieService.set('USER_INFO', response.token);
+      this.userService.authUser(this.loginForm.value as AuthRequest).subscribe({
+        next: (response) => {
+          console.log('AUTENTICADO', response);
+          // Seta Cookie com token JWT
+          this.cookieService.set('USER_INFO', response.token);
 
-            this.messageService.add({
-              severity: 'success', summary: 'Sucesso', detail: 'Bem vindo de volta!', life: 2000
-            });
-            this.loginForm.reset();
-            this.router.navigate(['/dashboard'])
-          },
-          error: (error) => {
-            console.log(error);
-            this.messageService.add({
-              severity: 'error', summary: 'Erro', detail: 'Erro ao fazer login!', life: 2000
-            })
-          }
-        })
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Bem vindo de volta!',
+            life: 2000,
+          });
+          this.loginForm.reset();
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.log(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao fazer login!',
+            life: 2000,
+          });
+        },
+      });
     }
   }
 
   onSubmitSignupForm(): void {
-    console.warn(this.signUpForm.value)
+    console.warn(this.signUpForm.value);
     if (this.signUpForm.value && this.signUpForm.valid) {
-      this.userService.signUpUser(this.signUpForm.value as UserRequest)
+      this.userService
+        .signUpUser(this.signUpForm.value as UserRequest)
         .subscribe({
           next: (response) => {
             this.messageService.add({
-              severity: 'success', summary: 'Sucesso', detail: 'Usuário criado com sucesso!', life: 2000
-            })
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Usuário criado com sucesso!',
+              life: 2000,
+            });
             this.signUpForm.reset();
             this.loginCard = true;
           },
           error: (error) => {
             console.log(error);
             this.messageService.add({
-              severity: 'error', summary: 'Erro', detail: 'Erro ao criar usuário!', life: 2000
-            })
-          }
-        })
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao criar usuário!',
+              life: 2000,
+            });
+          },
+        });
     }
   }
 }
