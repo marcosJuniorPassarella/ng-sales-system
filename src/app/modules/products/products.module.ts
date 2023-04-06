@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import {FileUploadModule} from 'primeng/fileupload';
 
 import { ProductsComponent } from './page/products/products.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -36,6 +37,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
     InputTextareaModule,
     InputNumberModule,
     DynamicDialogModule,
+    FileUploadModule
   ],
   providers: [DialogService],
 })
