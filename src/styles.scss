@@ -165,4 +165,8 @@
   button {
     background-color: #6372c3 !important;
   }
+
+:host ::ng-deep .p-dropdown {
+    width: 50%;
+  }
 }
