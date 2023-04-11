@@ -1,51 +1,32 @@
 <div class="card flex flex-column md:flex-collumn gap-3">
   <!-- Nome do produto -->
-  <div class="p-inputgroup">
-    <span class="p-inputgroup-addon">
-      <i class="pi pi-user"></i>
-    </span>
-    <input pInputText placeholder="Nome" />
-  </div>
+  <input pInputText placeholder="Nome" />
 
   <!-- Categoria do produto -->
   <p-dropdown
-  styleClass="w-full"
+    styleClass="w-full"
     [options]="categoriesDatas"
     [(ngModel)]="selectedCategory"
-    [showClear]="true"
     optionLabel="name"
     optionValue="id"
     placeholder="Selecione uma categoria"
   ></p-dropdown>
 
   <!-- Preço do produto -->
-  <div class="p-inputgroup">
-    <span class="p-inputgroup-addon">$</span>
-    <input type="text" pInputText placeholder="Preço" />
-    <span class="p-inputgroup-addon">,00</span>
-  </div>
+  <input type="text" pInputText placeholder="Preço" />
 
   <!-- Descrição do produto -->
-  <div class="p-inputgroup">
-    <span class="p-inputgroup-addon">
-      <i class="pi pi-pencil"></i>
-    </span>
-    <input type="text" pInputText placeholder="Descrição" />
-  </div>
+  <input type="text" pInputText placeholder="Descrição" />
 
   <!-- Foto do produto -->
-  <div class="p-inputgroup">
-    <span class="p-inputgroup-addon">
-      <i class="pi pi-image"></i>
-    </span>
-    <input type="file" pInputText placeholder="Foto" />
-  </div>
+  <input type="file" pInputText placeholder="Foto" />
 
   <!-- Quantidade -->
-  <div class="p-inputgroup">
-    <span class="p-inputgroup-addon">
-      <i class="pi pi-sort"></i>
-    </span>
-    <input type="number" pInputText placeholder="Quantidade" />
+  <input type="number" pInputText placeholder="Quantidade" />
+
+  <div
+    class="flex flex-row justify-content-center align-content-center align-items-center"
+  >
+    <p-button label="Concluir"></p-button>
   </div>
 </div>
