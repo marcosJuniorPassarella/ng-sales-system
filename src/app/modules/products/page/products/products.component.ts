@@ -3,6 +3,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AllProducts } from 'src/app/models/interfaces/Products/AllProducts';
 import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
+import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
 
 @Component({
   selector: 'app-products',
@@ -12,7 +13,15 @@ import { ProductFormComponent } from '../../components/product-form/product-form
 export class ProductsComponent implements OnInit {
   productsDatas: Array<AllProducts> = [];
   productSelected!: AllProducts;
-  ref!: DynamicDialogRef;
+
+  addProductEvent = {
+    title: ProductEvent.ADD_PRODUCT_TITLE,
+    action: ProductEvent.ADD_PRODUCT_EVENT,
+  };
+  editProductEvent = {
+    title: ProductEvent.EDIT_PRODUCT_TITLE,
+    action: ProductEvent.EDIT_PRODUCT_EVENT,
+  };
 
   constructor(
     private productsDtService: ProductsDataTransferService,
@@ -29,11 +38,15 @@ export class ProductsComponent implements OnInit {
     console.log(this.productsDatas);
   }
 
-  handleProduct(title: string, option: string): void {
+  handleProduct(productEvent: { title: string; action: string }): void {
     this.dialogService.open(ProductFormComponent, {
-      header: title,
+      header: productEvent.title,
+      width: '70%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
       data: {
-        action: option,
+        action: productEvent.action,
       },
     });
   }

@@ -25,12 +25,14 @@
               styleClass="p-button-success"
               icon="pi pi-plus"
               label="Adicionar"
+              (onClick)="handleProduct(addProductEvent)"
             ></p-button>
 
             <p-button
               styleClass="p-button-warning"
               icon="pi pi-pencil"
               label="Editar"
+              (onClick)="handleProduct(editProductEvent)"
             ></p-button>
 
             <p-button
