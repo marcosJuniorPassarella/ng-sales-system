@@ -18,6 +18,7 @@ import { ProductsComponent } from './page/products/products.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PRODUCTS_ROUTES } from './products.routing';
 import { ProductFormComponent } from './components/product-form/product-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [ProductsComponent, ProductFormComponent],
@@ -27,6 +28,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
     ReactiveFormsModule,
     RouterModule.forChild(PRODUCTS_ROUTES),
     SharedModule,
+    HttpClientModule,
     // PrimeNg
     CardModule,
     ButtonModule,

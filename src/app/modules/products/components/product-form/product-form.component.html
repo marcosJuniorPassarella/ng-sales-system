@@ -1,32 +1,38 @@
-<div class="card flex flex-column md:flex-collumn gap-3">
-  <!-- Nome do produto -->
-  <input pInputText placeholder="Nome" />
-
-  <!-- Categoria do produto -->
-  <p-dropdown
-    styleClass="w-full"
-    [options]="categoriesDatas"
-    [(ngModel)]="selectedCategory"
-    optionLabel="name"
-    optionValue="id"
-    placeholder="Selecione uma categoria"
-  ></p-dropdown>
-
-  <!-- Preço do produto -->
-  <input type="text" pInputText placeholder="Preço" />
-
-  <!-- Descrição do produto -->
-  <input type="text" pInputText placeholder="Descrição" />
-
-  <!-- Foto do produto -->
-  <input type="file" pInputText placeholder="Foto" />
-
-  <!-- Quantidade -->
-  <input type="number" pInputText placeholder="Quantidade" />
-
-  <div
-    class="flex flex-row justify-content-center align-content-center align-items-center"
-  >
-    <p-button label="Concluir"></p-button>
+<form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
+  <div class="card flex flex-column md:flex-collumn gap-3">
+    <!-- Formulário de adicionar produto -->
+    <!-- Nome do produto -->
+    <input pInputText placeholder="Nome" formControlName="name" />
+    <!-- Categoria do produto -->
+    <p-dropdown
+      styleClass="w-full"
+      [options]="categoriesDatas"
+      [(ngModel)]="selectedCategory"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Selecione uma categoria"
+      formControlName="category_id"
+    ></p-dropdown>
+    <!-- Preço do produto -->
+    <input type="text" pInputText placeholder="Preço" formControlName="price" />
+    <!-- Descrição do produto -->
+    <input
+      type="text"
+      pInputText
+      placeholder="Descrição"
+      formControlName="description"
+    />
+    <!-- Quantidade -->
+    <input
+      type="number"
+      pInputText
+      placeholder="Quantidade"
+      formControlName="amount"
+    />
+    <div
+      class="flex flex-row justify-content-center align-content-center align-items-center"
+    >
+      <p-button type="submit" label="Concluir"></p-button>
+    </div>
   </div>
-</div>
+</form>
