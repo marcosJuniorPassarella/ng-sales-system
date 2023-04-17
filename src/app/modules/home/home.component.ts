@@ -63,7 +63,6 @@ export class HomeComponent {
   }
 
   onSubmitSignupForm(): void {
-    console.warn(this.signUpForm.value);
     if (this.signUpForm.value && this.signUpForm.valid) {
       this.userService
         .signUpUser(this.signUpForm.value as UserRequest)
