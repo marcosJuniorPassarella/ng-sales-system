@@ -4,5 +4,4 @@ export interface ProductRequest {
   description: string;
   category_id: string;
   amount: number;
-  file: any;
 }
