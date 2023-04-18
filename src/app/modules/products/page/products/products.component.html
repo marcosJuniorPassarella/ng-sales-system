@@ -19,30 +19,6 @@
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} produtos"
         [showCurrentPageReport]="true"
       >
-        <ng-template pTemplate="caption">
-          <div class="flex gap-4">
-            <p-button
-              styleClass="p-button-success"
-              icon="pi pi-plus"
-              label="Adicionar"
-              (onClick)="handleProduct(addProductEvent)"
-            ></p-button>
-
-            <p-button
-              styleClass="p-button-warning"
-              icon="pi pi-pencil"
-              label="Editar"
-              (onClick)="handleProduct(editProductEvent)"
-            ></p-button>
-
-            <p-button
-              styleClass="p-button-danger"
-              icon="pi pi-trash"
-              label="Remover"
-            ></p-button>
-          </div>
-        </ng-template>
-
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="name" style="width: 50%">
@@ -61,6 +37,14 @@
                 display="menu"
               ></p-columnFilter>
             </th>
+            <th>
+              <p-button
+                styleClass="p-button-success"
+                icon="pi pi-plus"
+                label="Adicionar"
+                (onClick)="handleProduct(addProductAction)"
+              ></p-button>
+            </th>
           </tr>
         </ng-template>
 
@@ -68,6 +52,25 @@
           <tr>
             <td>{{ product?.name }}</td>
             <td>{{ product?.amount }}</td>
+            <td>
+              <div
+                class="flex justify-content-center gap-3 align-content-center align-items-center"
+              >
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-warning"
+                  (click)="handleProduct(editProductAction, product?.id)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger"
+                ></button>
+              </div>
+            </td>
           </tr>
         </ng-template>
       </p-table>
