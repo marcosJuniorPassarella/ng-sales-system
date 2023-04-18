@@ -22,7 +22,7 @@ export class CategoriesService {
 
   getAllCategories(): Observable<Array<AllCategories>> {
     return this.http.get<Array<AllCategories>>(
-      `${this.API_URL}/category/all`, this.httpOptions)
+      `${this.API_URL}/categories`, this.httpOptions)
   }
 
 }
