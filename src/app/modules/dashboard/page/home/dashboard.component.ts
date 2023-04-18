@@ -2,59 +2,37 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { ChartData, ChartOptions } from 'chart.js';
-import { UserService } from '../../../../services/user/user.service';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
-import { AllProducts } from 'src/app/models/interfaces/Products/AllProducts';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   userName!: string;
-  productsList: Array<AllProducts> = [];
+  productsList: Array<GetAllProductsResponse> = [];
 
   productsChartDatas!: ChartData;
   productsChartOptions!: ChartOptions;
 
   constructor(
-    private userService: UserService,
     private messageService: MessageService,
     private productsService: ProductsService,
     private productsDtService: ProductsDataTransferService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getUserDatas();
     this.getProductsDatas();
-  }
-
-  // Busca dados do usuário na API
-  getUserDatas(): void {
-    this.userService.getUserInfo()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          response && (this.userName = response.name)
-        },
-        error: (error) => {
-          console.log(error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao buscar dados do usuário',
-            life: 2000
-          })
-        }
-      })
   }
 
   // Busca dados de produtos na API
   getProductsDatas(): void {
-    this.productsService.getAllProducts()
+    this.productsService
+      .getAllProducts()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -64,7 +42,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
               this.productsList && this.setProductsChartConfig();
               this.productsDtService.setProductsDatas(this.productsList);
             }
-
           }
         },
         error: (error) => {
@@ -73,10 +50,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             severity: 'error',
             summary: 'Erro',
             detail: 'Erro ao buscar produtos',
-            life: 2000
-          })
-        }
-      })
+            life: 3000,
+          });
+        },
+      });
   }
 
   // Configura gráfico de produtos em estoque
@@ -84,7 +61,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.productsList.length > 0) {
       const documentStyle = getComputedStyle(document.documentElement);
       const textColor = documentStyle.getPropertyValue('--text-color');
-      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+      const textColorSecondary = documentStyle.getPropertyValue(
+        '--text-color-secondary'
+      );
       const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
       this.productsChartDatas = {
@@ -94,10 +73,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             label: 'Quantidade',
             backgroundColor: documentStyle.getPropertyValue('--yellow-400'),
             borderColor: documentStyle.getPropertyValue('--yellow-500'),
-            hoverBackgroundColor: documentStyle.getPropertyValue('--yellow-500'),
-            data: this.productsList.map((element) => element.amount)
-          }
-        ]
+            hoverBackgroundColor:
+              documentStyle.getPropertyValue('--yellow-500'),
+            data: this.productsList.map((element) => element.amount),
+          },
+        ],
       };
 
       this.productsChartOptions = {
@@ -106,32 +86,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
         plugins: {
           legend: {
             labels: {
-              color: textColor
-            }
-          }
+              color: textColor,
+            },
+          },
         },
         scales: {
           x: {
             ticks: {
               color: textColorSecondary,
               font: {
-                weight: '500'
-              }
+                weight: '500',
+              },
             },
             grid: {
               color: surfaceBorder,
-            }
+            },
           },
           y: {
             ticks: {
-              color: textColorSecondary
+              color: textColorSecondary,
             },
             grid: {
               color: surfaceBorder,
-            }
-          }
-
-        }
+            },
+          },
+        },
       };
     }
   }
@@ -140,5 +119,4 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-};
-
+}
