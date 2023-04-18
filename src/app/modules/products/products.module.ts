@@ -13,15 +13,18 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { ProductsComponent } from './page/products/products.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PRODUCTS_ROUTES } from './products.routing';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmationService } from 'primeng/api';
+import { ProductsTableComponent } from './components/products-table/products-table.component';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductFormComponent],
+  declarations: [ProductsComponent, ProductFormComponent, ProductsTableComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,8 +42,9 @@ import { HttpClientModule } from '@angular/common/http';
     InputTextareaModule,
     InputNumberModule,
     DynamicDialogModule,
-    DropdownModule
+    DropdownModule,
+    ConfirmDialogModule,
   ],
-  providers: [DialogService],
+  providers: [DialogService, ConfirmationService],
 })
 export class ProductsModule {}
