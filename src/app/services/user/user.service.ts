@@ -6,7 +6,6 @@ import { AuthRequest } from '../../models/interfaces/User/auth/AuthRequest';
 import { AuthResponse } from 'src/app/models/interfaces/User/auth/AuthResponse';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../environments/environment';
-import { UserInfo } from '../../models/interfaces/User/UserInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -28,18 +27,11 @@ export class UserService {
   }
 
   authUser(requestDatas: AuthRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(
-      `${this.API_URL}/session`,
-      requestDatas
-    );
+    return this.http.post<AuthResponse>(`${this.API_URL}/auth`, requestDatas);
   }
 
   isLoggedIn(): boolean {
     const JWT_TOKEN = this.cookie.get('USER_INFO');
     return JWT_TOKEN ? true : false;
-  }
-
-  getUserInfo(): Observable<UserInfo> {
-    return this.http.get<UserInfo>(`${this.API_URL}/me`, this.httpOptions);
   }
 }
