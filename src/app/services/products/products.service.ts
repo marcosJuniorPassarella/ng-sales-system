@@ -2,9 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
-import { AllProducts } from 'src/app/models/interfaces/Products/AllProducts';
-import { ProductRequest } from 'src/app/models/interfaces/Products/ProductRequest';
+import { EditProductRequest } from 'src/app/models/interfaces/Products/request/EditProductRequest';
 import { environment } from 'src/environments/environment';
+import { CreateProductRequest } from 'src/app/models/interfaces/Products/request/CreateProductRequest';
+import { CreateProductResponse } from 'src/app/models/interfaces/Products/response/CreateProductResponse';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -21,18 +23,26 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
-  getAllProducts(): Observable<Array<AllProducts>> {
-    return this.http.get<Array<AllProducts>>(
+  getAllProducts(): Observable<Array<GetAllProductsResponse>> {
+    return this.http.get<Array<GetAllProductsResponse>>(
       `${this.API_URL}/products`,
       this.httpOptions
     );
   }
 
-  public createProduct(
-    requestDatas: ProductRequest
-  ): Observable<ProductRequest> {
-    return this.http.post<ProductRequest>(
+  createProduct(
+    requestDatas: CreateProductRequest
+  ): Observable<CreateProductResponse> {
+    return this.http.post<CreateProductResponse>(
       `${this.API_URL}/product`,
+      requestDatas,
+      this.httpOptions
+    );
+  }
+
+  editProduct(requestDatas: EditProductRequest): Observable<any> {
+    return this.http.put<EditProductRequest>(
+      `${this.API_URL}/product/edit`,
       requestDatas,
       this.httpOptions
     );
