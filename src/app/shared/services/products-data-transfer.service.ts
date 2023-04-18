@@ -1,28 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { AllProducts } from 'src/app/models/interfaces/Products/AllProducts';
+import { BehaviorSubject, take } from 'rxjs';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsDataTransferService {
   productsDataEmitter$ = new BehaviorSubject<any>(null);
-  productsDatas: Array<AllProducts> = [];
+  productsDatas: Array<GetAllProductsResponse> = [];
 
-  setProductsDatas(productsDatas: Array<AllProducts>): void {
+  setProductsDatas(productsDatas: Array<GetAllProductsResponse>): void {
     if (productsDatas) {
       this.productsDataEmitter$.next(productsDatas);
       this.getProductsDatas();
     }
   }
 
-  getProductsDatas(): Array<AllProducts> {
-    this.productsDataEmitter$.subscribe({
-      next: (products: Array<AllProducts>) => {
+  getProductsDatas(): Array<GetAllProductsResponse> {
+    this.productsDataEmitter$.pipe(take(1)).subscribe({
+      next: (products: Array<GetAllProductsResponse>) => {
         products && (this.productsDatas = products);
-      }
-    })
+      },
+    });
     return this.productsDatas;
   }
-
 }
