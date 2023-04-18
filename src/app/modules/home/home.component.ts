@@ -40,14 +40,14 @@ export class HomeComponent {
           // Seta Cookie com token JWT
           this.cookieService.set('USER_INFO', response.token);
 
+          this.loginForm.reset();
+          this.router.navigate(['/dashboard']);
           this.messageService.add({
             severity: 'success',
             summary: 'Sucesso',
             detail: 'Bem vindo de volta!',
             life: 2000,
           });
-          this.loginForm.reset();
-          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.log(error);
