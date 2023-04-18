@@ -15,11 +15,10 @@ import { MessageService } from 'primeng/api';
 import { DashboardComponent } from './page/home/dashboard.component';
 import { DASHBOARD_ROUTES } from './dashboard.routing';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
-  declarations: [
-    DashboardComponent
-  ],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -31,8 +30,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ChartModule,
     ButtonModule,
     ToolbarModule,
-    CardModule
+    CardModule,
+    ToastModule,
   ],
   providers: [MessageService, CookieService],
 })
-export class DashboardModule { }
+export class DashboardModule {}
