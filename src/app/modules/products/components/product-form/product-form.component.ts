@@ -4,8 +4,8 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
-import { AllCategories } from 'src/app/models/interfaces/Categories/AllCategories';
-import { ProductAction } from 'src/app/models/interfaces/Products/event/ProductAction';
+import { GetCategoriesResponse } from 'src/app/models/interfaces/Categories/GetCategoriesResponse';
+import { EventAction } from 'src/app/models/interfaces/event/EventAction';
 import { CreateProductRequest } from 'src/app/models/interfaces/Products/request/CreateProductRequest';
 import { EditProductRequest } from 'src/app/models/interfaces/Products/request/EditProductRequest';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
@@ -20,10 +20,10 @@ import { ProductsService } from 'src/app/services/products/products.service';
 export class ProductFormComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
 
-  categoriesDatas: Array<AllCategories> = [];
+  categoriesDatas: Array<GetCategoriesResponse> = [];
   selectedCategory: Array<{ name: string; code: string }> = [];
   productAction!: {
-    event: ProductAction;
+    event: EventAction;
     productDatas: Array<GetAllProductsResponse>;
   };
   productSelectedDatas!: GetAllProductsResponse;

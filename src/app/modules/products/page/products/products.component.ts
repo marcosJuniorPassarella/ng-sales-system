@@ -2,12 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Router } from '@angular/router';
 
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
 import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/request/GetAllProductsRequest';
-import { ProductAction } from 'src/app/models/interfaces/Products/event/ProductAction';
+import { EventAction } from 'src/app/models/interfaces/event/EventAction';
 
 @Component({
   selector: 'app-products',
@@ -24,7 +25,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private productDataTransferService: ProductsDataTransferService,
     private dialogService: DialogService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,11 +58,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
             detail: 'Erro ao buscar produtos',
             life: 3000,
           });
+          this.router.navigate(['/dashboard']);
         },
       });
   }
 
-  handleProductAction(event: ProductAction): void {
+  handleProductAction(event: EventAction): void {
     if (event) {
       this.ref = this.dialogService.open(ProductFormComponent, {
         header: event?.action,

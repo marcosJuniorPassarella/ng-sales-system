@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
 import { DeleteProductAction } from 'src/app/models/interfaces/Products/event/DeleteProductAction';
-import { ProductAction } from 'src/app/models/interfaces/Products/event/ProductAction';
+import { EventAction } from 'src/app/models/interfaces/event/EventAction';
 import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/request/GetAllProductsRequest';
 
 @Component({
@@ -11,7 +11,7 @@ import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/reques
 })
 export class ProductsTableComponent {
   @Input() products: Array<GetAllProductsRequest> = [];
-  @Output() productEvent = new EventEmitter<ProductAction>();
+  @Output() productEvent = new EventEmitter<EventAction>();
   @Output() deleteProductEvent = new EventEmitter<DeleteProductAction>();
 
   productSelected!: GetAllProductsRequest;
@@ -19,8 +19,8 @@ export class ProductsTableComponent {
   editProductAction = ProductEvent.EDIT_PRODUCT_ACTION;
 
   handleProductEvent(action: string, id?: string): void {
-    if (action && action !== ' ') {
-      const productEventData = id && id !== ' ' ? { action, id } : { action };
+    if (action && action !== '') {
+      const productEventData = id && id !== '' ? { action, id } : { action };
       this.productEvent.emit(productEventData);
     }
   }
