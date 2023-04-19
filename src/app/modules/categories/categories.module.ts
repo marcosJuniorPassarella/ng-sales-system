@@ -20,9 +20,10 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService } from 'primeng/api';
 import { CategoriesTableComponent } from './components/categories-table/categories-table.component';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
 
 @NgModule({
-  declarations: [CategoriesComponent, CategoriesTableComponent],
+  declarations: [CategoriesComponent, CategoriesTableComponent, CategoryFormComponent],
   imports: [
     CommonModule,
     FormsModule,
