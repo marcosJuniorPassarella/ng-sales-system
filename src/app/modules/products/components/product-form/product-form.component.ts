@@ -5,12 +5,12 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
 import { AllCategories } from 'src/app/models/interfaces/Categories/AllCategories';
+import { ProductAction } from 'src/app/models/interfaces/Products/event/ProductAction';
 import { CreateProductRequest } from 'src/app/models/interfaces/Products/request/CreateProductRequest';
 import { EditProductRequest } from 'src/app/models/interfaces/Products/request/EditProductRequest';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { ProductsService } from 'src/app/services/products/products.service';
-import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
 
 @Component({
   selector: 'app-product-form',
@@ -22,7 +22,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   categoriesDatas: Array<AllCategories> = [];
   selectedCategory: Array<{ name: string; code: string }> = [];
-  productAction!: { action: string; id?: string };
+  productAction!: {
+    event: ProductAction;
+    productDatas: Array<GetAllProductsResponse>;
+  };
   productSelectedDatas!: GetAllProductsResponse;
 
   addProductAction = ProductEvent.ADD_PRODUCT_ACTION;
@@ -48,16 +51,17 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     private categoriesService: CategoriesService,
     private formBuilder: FormBuilder,
     private productsService: ProductsService,
-    private messageService: MessageService,
-    private productsDtService: ProductsDataTransferService
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    this.productAction = this.ref.data?.event;
+    this.productAction = this.ref.data;
     console.log(this.productAction);
-    if (this.productAction && this.productAction.id) {
-      this.productAction.action === this.editProductAction &&
-        this.getProductSelectedDatas(this.productAction?.id);
+    if (
+      this.productAction?.event?.action === this.editProductAction &&
+      this.productAction.productDatas
+    ) {
+      this.getProductSelectedDatas(this.productAction?.event.id as string);
     }
     this.getAllCategories();
   }
@@ -76,25 +80,27 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   getProductSelectedDatas(productId: string): void {
-    console.log('ID DO PRODUTO', productId);
-    const allProducts = this.productsDtService.getProductsDatas();
+    const allProducts = this.productAction?.productDatas;
     if (allProducts) {
       const productFiltered = allProducts.filter(
         (element) => element?.id === productId
       );
-      productFiltered && (this.productSelectedDatas = productFiltered[0]);
-      console.log('Produto filtrado selecionado', this.productSelectedDatas);
-      this.editProductForm.setValue({
-        name: this.productSelectedDatas?.name,
-        price: this.productSelectedDatas?.price,
-        amount: this.productSelectedDatas?.amount,
-        description: this.productSelectedDatas?.description,
-      });
+
+      if (productFiltered) {
+        this.productSelectedDatas = productFiltered[0];
+
+        this.editProductForm.setValue({
+          name: this.productSelectedDatas?.name,
+          price: this.productSelectedDatas?.price,
+          amount: this.productSelectedDatas?.amount,
+          description: this.productSelectedDatas?.description,
+        });
+      }
     }
   }
 
   handleSubmitAddProduct(): void {
-    if (this.addProductForm.value && this.addProductForm.valid) {
+    if (this.addProductForm?.value && this.addProductForm?.valid) {
       const requestCreateProduct: CreateProductRequest = {
         name: this.addProductForm.value.name as string,
         price: this.addProductForm.value.price as string,
@@ -136,13 +142,13 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     if (
       this.editProductForm.value &&
       this.editProductForm.valid &&
-      this.productAction.id
+      this.productAction.event.id
     ) {
       const requestEditProduct: EditProductRequest = {
         name: this.editProductForm.value.name as string,
         price: this.editProductForm.value.price as string,
         description: this.editProductForm.value.description as string,
-        product_id: this.productAction.id,
+        product_id: this.productAction.event.id,
         amount: this.editProductForm.value.amount as number,
       };
 
