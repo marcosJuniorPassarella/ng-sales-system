@@ -33,9 +33,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   getServiceProductsDatas(): void {
     const productsLoaded = this.productDataTransferService.getProductsDatas();
-    if (productsLoaded) {
+    if (productsLoaded.length > 0) {
       this.productsDatas = productsLoaded;
-    }
+    } else this.getAPIProductsDatas();
   }
 
   getAPIProductsDatas(): void {
