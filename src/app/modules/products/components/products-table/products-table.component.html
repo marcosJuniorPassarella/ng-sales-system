@@ -9,6 +9,7 @@
         [value]="products"
         [rows]="10"
         [paginator]="true"
+        [responsive]="true"
         [globalFilterFields]="['name', 'amount']"
         [tableStyle]="{ 'min-width': '75rem' }"
         [(selection)]="productSelected"
@@ -30,6 +31,10 @@
                     type="text"
                     field="name"
                     display="menu"
+                    matchMode="contains"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showAddButton]="false"
                   ></p-columnFilter>
                 </div>
               </div>
@@ -45,6 +50,10 @@
                     type="text"
                     field="amount"
                     display="menu"
+                    matchMode="contains"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showAddButton]="false"
                   ></p-columnFilter>
                 </div>
               </div>
@@ -60,6 +69,10 @@
                     type="text"
                     field="price"
                     display="menu"
+                    matchMode="contains"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showAddButton]="false"
                   ></p-columnFilter>
                 </div>
               </div>
@@ -75,6 +88,10 @@
                     type="text"
                     field="description"
                     display="menu"
+                    matchMode="contains"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showAddButton]="false"
                   ></p-columnFilter>
                 </div>
               </div>
@@ -82,7 +99,7 @@
             <th>
               <div class="flex justify-content-center">
                 <p-button
-                  styleClass="p-button-success"
+                  styleClass="p-button-info"
                   icon="pi pi-plus"
                   label="Adicionar"
                   (onClick)="handleProductEvent(addProductAction)"
@@ -94,10 +111,16 @@
 
         <ng-template pTemplate="body" let-product>
           <tr>
-            <td>{{ product?.name }}</td>
+            <td>{{ product?.name | shorten : 25 }}</td>
             <td>{{ product?.amount }}</td>
             <td>{{ product?.price | currency : "BRL" }}</td>
-            <td>{{ product?.description }}</td>
+            <td
+              [pTooltip]="product?.description"
+              tooltipPosition="top"
+              placeholder="Top"
+            >
+              {{ product?.description | shorten : 25 }}
+            </td>
             <td>
               <div
                 class="flex justify-content-center gap-3 align-content-center align-items-center"
