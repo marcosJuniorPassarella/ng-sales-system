@@ -6,13 +6,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarNavigationComponent } from './components/toolbar-navigation/toolbar-navigation.component';
-
-
+import { ShortenPipe } from './pipes/shorten/shorten.pipe';
 
 @NgModule({
-  declarations: [
-    ToolbarNavigationComponent
-  ],
+  declarations: [ToolbarNavigationComponent, ShortenPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,8 +17,8 @@ import { ToolbarNavigationComponent } from './components/toolbar-navigation/tool
     // PrimeNg
     ToolbarModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
   ],
-  exports: [ToolbarNavigationComponent]
+  exports: [ToolbarNavigationComponent, ShortenPipe],
 })
-export class SharedModule { }
+export class SharedModule {}

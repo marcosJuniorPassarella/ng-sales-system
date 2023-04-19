@@ -14,6 +14,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { ProductsComponent } from './page/products/products.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -24,7 +25,11 @@ import { ConfirmationService } from 'primeng/api';
 import { ProductsTableComponent } from './components/products-table/products-table.component';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductFormComponent, ProductsTableComponent],
+  declarations: [
+    ProductsComponent,
+    ProductFormComponent,
+    ProductsTableComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -44,6 +49,7 @@ import { ProductsTableComponent } from './components/products-table/products-tab
     DynamicDialogModule,
     DropdownModule,
     ConfirmDialogModule,
+    TooltipModule,
   ],
   providers: [DialogService, ConfirmationService],
 })
