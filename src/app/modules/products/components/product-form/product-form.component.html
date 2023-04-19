@@ -1,4 +1,4 @@
-<div *ngIf="productAction?.action === addProductAction">
+<div *ngIf="productAction?.event?.action === addProductAction">
   <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
     <!-- Formulário de adicionar produto -->
     <div class="card flex flex-column md:flex-collumn gap-3">
@@ -49,7 +49,7 @@
 </div>
 
 <!-- Formulário de editar produto -->
-<div *ngIf="productAction?.action === editProductAction">
+<div *ngIf="productAction?.event?.action === editProductAction">
   <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()">
     <div class="card flex flex-column md:flex-collumn gap-3">
       <!-- Nome do produto -->
