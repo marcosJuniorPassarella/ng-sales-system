@@ -1,4 +1,4 @@
-export interface ProductAction {
+export interface EventAction {
   action: string;
   id?: string;
 }
