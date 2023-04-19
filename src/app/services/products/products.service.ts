@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { CreateProductRequest } from 'src/app/models/interfaces/Products/request/CreateProductRequest';
 import { CreateProductResponse } from 'src/app/models/interfaces/Products/response/CreateProductResponse';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
+import { DeleteProductResponse } from 'src/app/models/interfaces/Products/response/DeleteProductResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,18 @@ export class ProductsService {
       `${this.API_URL}/product/edit`,
       requestDatas,
       this.httpOptions
+    );
+  }
+
+  deleteProduct(product_id: string): Observable<DeleteProductResponse> {
+    return this.http.delete<DeleteProductResponse>(
+      `${this.API_URL}/product/delete`,
+      {
+        ...this.httpOptions,
+        params: {
+          product_id: product_id,
+        },
+      }
     );
   }
 }
