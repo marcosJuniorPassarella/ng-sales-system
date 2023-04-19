@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
-import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
-import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/request/GetAllProductsRequest';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
+import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/request/GetAllProductsRequest';
+import { ProductAction } from 'src/app/models/interfaces/Products/event/ProductAction';
 
 @Component({
   selector: 'app-products',
@@ -18,16 +18,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   private ref!: DynamicDialogRef;
   productsDatas: Array<GetAllProductsRequest> = [];
-  productSelected!: GetAllProductsRequest;
-
-  addProductAction = ProductEvent.ADD_PRODUCT_ACTION;
-  editProductAction = ProductEvent.EDIT_PRODUCT_ACTION;
 
   constructor(
     private productsService: ProductsService,
     private productDataTransferService: ProductsDataTransferService,
     private dialogService: DialogService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -63,21 +60,68 @@ export class ProductsComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleProduct(action: string, id?: string): void {
-    this.ref = this.dialogService.open(ProductFormComponent, {
-      header: action,
-      width: '70%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      maximizable: true,
-      data: {
-        event: { action, id },
-      },
-    });
+  handleProductAction(event: ProductAction): void {
+    if (event) {
+      this.ref = this.dialogService.open(ProductFormComponent, {
+        header: event?.action,
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: {
+          event: event,
+          productDatas: this.productsDatas,
+        },
+      });
+      this.ref.onClose.pipe(takeUntil(this.destroy$)).subscribe({
+        next: () => this.getAPIProductsDatas(),
+      });
+    }
+  }
 
-    this.ref.onClose.pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => this.getAPIProductsDatas(),
-    });
+  handleDeleteProductAction(event: {
+    product_id: string;
+    productName: string;
+  }): void {
+    if (event) {
+      this.confirmationService.confirm({
+        message: `Confirma a exclusão do produto: ${event?.productName}?`,
+        header: 'Confirmação de exclusão',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => this.deleteProduct(event?.product_id),
+      });
+    }
+  }
+
+  deleteProduct(product_id: string): void {
+    this.productsService
+      .deleteProduct(product_id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Produto removido com sucesso!',
+              life: 3000,
+            });
+
+            this.getAPIProductsDatas();
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao remover produto!',
+            life: 3000,
+          });
+        },
+      });
   }
 
   ngOnDestroy(): void {
