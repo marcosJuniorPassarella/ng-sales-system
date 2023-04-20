@@ -56,7 +56,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productAction = this.ref.data;
-    console.log(this.productAction);
     if (
       this.productAction?.event?.action === this.editProductAction &&
       this.productAction.productDatas

@@ -31,7 +31,6 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.categoryAction = this.ref.data;
-    console.log(this.categoryAction);
 
     if (
       this.categoryAction?.event?.action ===
@@ -94,8 +93,6 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
       this.categoryForm?.valid &&
       this.categoryAction?.event?.id
     ) {
-      console.log('FORMULÁRIO', this.categoryForm.value);
-      console.log('Id da categoria', this.categoryAction?.event?.id);
       const requestEditCategory: { name: string; category_id: string } = {
         name: this.categoryForm.value.name as string,
         category_id: this.categoryAction?.event?.id,

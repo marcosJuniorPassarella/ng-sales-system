@@ -36,7 +36,6 @@ export class HomeComponent {
     if (this.loginForm.value && this.loginForm.valid) {
       this.userService.authUser(this.loginForm.value as AuthRequest).subscribe({
         next: (response) => {
-          console.log('AUTENTICADO', response);
           // Seta Cookie com token JWT
           this.cookieService.set('USER_INFO', response.token);
 
