@@ -8,6 +8,7 @@ import { GetCategoriesResponse } from 'src/app/models/interfaces/Categories/GetC
 import { DeleteCategoryAction } from 'src/app/models/interfaces/Categories/event/DeleteCategoryAction';
 import { EventAction } from 'src/app/models/interfaces/event/EventAction';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
+import { CategoryFormComponent } from '../../components/category-form/category-form.component';
 
 @Component({
   selector: 'app-categories',
@@ -56,14 +57,60 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   handleCategoryAction(event: EventAction): void {
     if (event) {
-      console.log(event);
+      this.ref = this.dialogService.open(CategoryFormComponent, {
+        header: event?.action,
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: {
+          event: event,
+        },
+      });
+      this.ref.onClose.pipe(takeUntil(this.destroy$)).subscribe({
+        next: () => this.getCategoriesDatas(),
+      });
     }
   }
 
   handleDeleteCategoryAction(event: DeleteCategoryAction): void {
     if (event) {
-      console.log(event);
+      this.confirmationService.confirm({
+        message: `Confirma a exclusão da categoria: ${event?.categoryName}?`,
+        header: 'Confirmação de exclusão',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => this.deleteCategory(event?.category_id),
+      });
     }
+  }
+
+  deleteCategory(category_id: string): void {
+    this.categoriesService
+      .deleteCategory({ category_id })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Categoria removida com sucesso!',
+            life: 3000,
+          });
+          this.getCategoriesDatas();
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao remover categoria!',
+            life: 3000,
+          });
+          this.getCategoriesDatas();
+        },
+      });
   }
 
   ngOnDestroy(): void {

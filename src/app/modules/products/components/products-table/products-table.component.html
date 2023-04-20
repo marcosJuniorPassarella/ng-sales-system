@@ -102,6 +102,8 @@
                   styleClass="p-button-info"
                   icon="pi pi-plus"
                   label="Adicionar"
+                  pTooltip="Adicionar produto"
+                  tooltipPosition="top"
                   (onClick)="handleProductEvent(addProductAction)"
                 ></p-button>
               </div>
@@ -130,6 +132,8 @@
                   pRipple
                   icon="pi pi-pencil"
                   class="p-button-rounded p-button-warning"
+                  tooltipPosition="top"
+                  pTooltip="Editar produto"
                   (click)="handleProductEvent(editProductAction, product?.id)"
                 ></button>
                 <button
@@ -137,6 +141,8 @@
                   pRipple
                   icon="pi pi-trash"
                   class="p-button-rounded p-button-danger"
+                  tooltipPosition="top"
+                  pTooltip="Remover produto"
                   (click)="handleDeleteProduct(product?.id, product?.name)"
                 ></button>
               </div>
