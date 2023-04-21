@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, map, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { ChartData, ChartOptions } from 'chart.js';
 import { ProductsService } from 'src/app/services/products/products.service';
@@ -33,7 +33,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getProductsDatas(): void {
     this.productsService
       .getAllProducts()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        map((data: Array<GetAllProductsResponse>) =>
+          data.filter((product: GetAllProductsResponse) => product?.amount > 0)
+        )
+      )
       .subscribe({
         next: (response) => {
           if (response) {

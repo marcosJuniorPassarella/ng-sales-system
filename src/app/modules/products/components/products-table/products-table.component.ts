@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
 import { DeleteProductAction } from 'src/app/models/interfaces/Products/event/DeleteProductAction';
 import { EventAction } from 'src/app/models/interfaces/event/EventAction';
-import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/request/GetAllProductsRequest';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
 
 @Component({
   selector: 'app-products-table',
@@ -10,11 +10,11 @@ import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/reques
   styleUrls: [],
 })
 export class ProductsTableComponent {
-  @Input() products: Array<GetAllProductsRequest> = [];
+  @Input() products: Array<GetAllProductsResponse> = [];
   @Output() productEvent = new EventEmitter<EventAction>();
   @Output() deleteProductEvent = new EventEmitter<DeleteProductAction>();
 
-  productSelected!: GetAllProductsRequest;
+  productSelected!: GetAllProductsResponse;
   addProductAction = ProductEvent.ADD_PRODUCT_ACTION;
   editProductAction = ProductEvent.EDIT_PRODUCT_ACTION;
 

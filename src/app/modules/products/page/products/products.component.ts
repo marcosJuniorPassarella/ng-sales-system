@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, map, takeUntil } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Router } from '@angular/router';
@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/shared/services/products-data-transfer.service';
-import { GetAllProductsRequest } from 'src/app/models/interfaces/Products/request/GetAllProductsRequest';
 import { EventAction } from 'src/app/models/interfaces/event/EventAction';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/Products/response/GetAllProductsResponse';
 
 @Component({
   selector: 'app-products',
@@ -18,7 +18,7 @@ import { EventAction } from 'src/app/models/interfaces/event/EventAction';
 export class ProductsComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   private ref!: DynamicDialogRef;
-  productsDatas: Array<GetAllProductsRequest> = [];
+  productsDatas: Array<GetAllProductsResponse> = [];
 
   constructor(
     private productsService: ProductsService,
@@ -43,7 +43,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getAPIProductsDatas(): void {
     this.productsService
       .getAllProducts()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        map((data: Array<GetAllProductsResponse>) =>
+          data.filter((product: GetAllProductsResponse) => product?.amount > 0)
+        )
+      )
       .subscribe({
         next: (response) => {
           if (response.length > 0) {
