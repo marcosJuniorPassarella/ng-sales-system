@@ -244,7 +244,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
               life: 3000,
             });
             this.saleProductForm.reset();
-            this.router.navigate(['/dashboard']);
           },
         });
     }
