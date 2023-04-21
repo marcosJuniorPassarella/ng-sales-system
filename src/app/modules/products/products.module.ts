@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -15,14 +16,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
-
-import { ProductsComponent } from './page/products/products.component';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { PRODUCTS_ROUTES } from './products.routing';
-import { ProductFormComponent } from './components/product-form/product-form.component';
-import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationService } from 'primeng/api';
+
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ProductsComponent } from './page/products/products.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 import { ProductsTableComponent } from './components/products-table/products-table.component';
+import { PRODUCTS_ROUTES } from './products.routing';
 
 @NgModule({
   declarations: [

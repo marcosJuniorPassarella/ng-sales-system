@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ProductEvent } from 'src/app/models/enums/Products/ProductEvent';
 import { GetCategoriesResponse } from 'src/app/models/interfaces/Categories/GetCategoriesResponse';
 import { EventAction } from 'src/app/models/interfaces/event/EventAction';

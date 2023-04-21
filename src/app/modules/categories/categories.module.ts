@@ -23,7 +23,11 @@ import { CategoriesTableComponent } from './components/categories-table/categori
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 
 @NgModule({
-  declarations: [CategoriesComponent, CategoriesTableComponent, CategoryFormComponent],
+  declarations: [
+    CategoriesComponent,
+    CategoriesTableComponent,
+    CategoryFormComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

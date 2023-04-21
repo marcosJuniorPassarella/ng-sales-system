@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { CategoryEvent } from 'src/app/models/enums/Categories/CategoryEvent';
 import { EditCategoryAction } from 'src/app/models/interfaces/Categories/event/EditCategoryAction';
 import { CategoriesService } from 'src/app/services/categories/categories.service';

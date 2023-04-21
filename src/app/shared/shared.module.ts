@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { ToolbarNavigationComponent } from './components/toolbar-navigation/toolbar-navigation.component';
-import { ShortenPipe } from './pipes/shorten/shorten.pipe';
 import { DialogService } from 'primeng/dynamicdialog';
+
+import { ShortenPipe } from './pipes/shorten/shorten.pipe';
+import { ToolbarNavigationComponent } from './components/toolbar-navigation/toolbar-navigation.component';
 
 @NgModule({
   declarations: [ToolbarNavigationComponent, ShortenPipe],
@@ -21,6 +22,6 @@ import { DialogService } from 'primeng/dynamicdialog';
     ButtonModule,
   ],
   exports: [ToolbarNavigationComponent, ShortenPipe],
-  providers: [DialogService]
+  providers: [DialogService],
 })
 export class SharedModule {}

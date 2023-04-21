@@ -11,11 +11,11 @@ import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 import { DashboardComponent } from './page/home/dashboard.component';
 import { DASHBOARD_ROUTES } from './dashboard.routing';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [DashboardComponent],

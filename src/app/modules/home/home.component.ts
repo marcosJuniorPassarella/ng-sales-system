@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../services/user/user.service';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
 import { AuthRequest } from 'src/app/models/interfaces/User/auth/AuthRequest';
 import { UserRequest } from 'src/app/models/interfaces/User/UserRequest';
 

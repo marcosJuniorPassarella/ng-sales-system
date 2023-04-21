@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, map, takeUntil } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Router } from '@angular/router';
 
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from 'src/app/services/products/products.service';

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 
 import { GetCategoriesResponse } from 'src/app/models/interfaces/Categories/GetCategoriesResponse';
 import { DeleteCategoryAction } from 'src/app/models/interfaces/Categories/event/DeleteCategoryAction';
