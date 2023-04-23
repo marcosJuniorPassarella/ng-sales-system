@@ -44,7 +44,7 @@ export class HomeComponent {
           this.messageService.add({
             severity: 'success',
             summary: 'Sucesso',
-            detail: 'Bem vindo de volta!',
+            detail: `Bem vindo de volta! ${response?.name}`,
             life: 2000,
           });
         },

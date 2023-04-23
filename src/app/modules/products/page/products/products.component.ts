@@ -43,12 +43,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getAPIProductsDatas(): void {
     this.productsService
       .getAllProducts()
-      .pipe(
-        takeUntil(this.destroy$),
-        map((data: Array<GetAllProductsResponse>) =>
-          data.filter((product: GetAllProductsResponse) => product?.amount > 0)
-        )
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (response.length > 0) {

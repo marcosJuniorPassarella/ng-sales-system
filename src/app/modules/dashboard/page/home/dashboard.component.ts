@@ -33,12 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getProductsDatas(): void {
     this.productsService
       .getAllProducts()
-      .pipe(
-        takeUntil(this.destroy$),
-        map((data: Array<GetAllProductsResponse>) =>
-          data.filter((product: GetAllProductsResponse) => product?.amount > 0)
-        )
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (response) {
