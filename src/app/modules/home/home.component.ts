@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../services/user/user.service';
 import { AuthRequest } from 'src/app/models/interfaces/User/auth/AuthRequest';
-import { UserRequest } from 'src/app/models/interfaces/User/UserRequest';
+import { SignupUserRequest } from 'src/app/models/interfaces/User/SignupUserRequest';
 
 @Component({
   selector: 'app-home',
@@ -64,9 +64,9 @@ export class HomeComponent {
   onSubmitSignupForm(): void {
     if (this.signUpForm.value && this.signUpForm.valid) {
       this.userService
-        .signUpUser(this.signUpForm.value as UserRequest)
+        .signUpUser(this.signUpForm.value as SignupUserRequest)
         .subscribe({
-          next: (response) => {
+          next: () => {
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
