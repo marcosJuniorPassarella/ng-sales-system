@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, map, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ChartData, ChartOptions } from 'chart.js';
 import { MessageService } from 'primeng/api';
 import { ProductsService } from 'src/app/services/products/products.service';
@@ -38,8 +38,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response) {
             this.productsList = response;
-            if (this.productsList) {
-              this.productsList && this.setProductsChartConfig();
+            if (this.productsList.length > 0) {
+              this.setProductsChartConfig();
               this.productsDtService.setProductsDatas(this.productsList);
             }
           }

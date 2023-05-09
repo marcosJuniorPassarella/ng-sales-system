@@ -1,6 +1,6 @@
 <div *ngIf="productAction?.event?.action === addProductAction">
+  <!-- Formulário de adicionar produto -->
   <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
-    <!-- Formulário de adicionar produto -->
     <div class="card flex flex-column md:flex-collumn gap-3">
       <!-- Nome do produto -->
       <input pInputText placeholder="Nome" formControlName="name" />
